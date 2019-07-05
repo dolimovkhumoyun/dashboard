@@ -17,7 +17,7 @@ class Movies extends Component {
   };
 
   componentDidMount() {
-    const genres = [{ _id: "1", name: "All Genres" }, ...getGenres()];
+    const genres = [{ _id: " ", name: "All Genres" }, ...getGenres()];
 
     this.setState({ movies: getMovies(), genres: genres });
   }
@@ -56,8 +56,6 @@ class Movies extends Component {
       selectedGenre,
       movies: allMovies
     } = this.state;
-
-    // if (selectedGenre._id === undefined) selectedGenre._id = "1";
 
     const filtered =
       selectedGenre && selectedGenre._id
