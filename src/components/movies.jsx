@@ -17,7 +17,7 @@ class Movies extends Component {
   };
 
   componentDidMount() {
-    const genres = [{ _id: " ", name: "All Genres" }, ...getGenres()];
+    const genres = [{ _id: 1, name: "All Genres" }, ...getGenres()];
 
     this.setState({ movies: getMovies(), genres: genres });
   }
@@ -57,10 +57,15 @@ class Movies extends Component {
       movies: allMovies
     } = this.state;
 
-    const filtered =
+    // let filtered;
+
+    let filtered =
       selectedGenre && selectedGenre._id
         ? allMovies.filter(m => m.genre._id === selectedGenre._id)
         : allMovies;
+    if (selectedGenre === undefined || selectedGenre._id === 1) {
+      filtered = allMovies;
+    }
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
