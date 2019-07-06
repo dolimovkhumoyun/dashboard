@@ -1,57 +1,36 @@
 import React, { Component } from "react";
+import Joi from "joi-browser";
+import Form from "./common/form";
 
-class LoginForm extends Component {
+class LoginForm extends Form {
   state = {
-    account: { username: " ", password: "" }
+    data: { username: "", password: "" },
+    errors: {}
   };
 
-  handleSubmit = e => {
-    e.preventDefault();
-
-    const username = this.username.current.value;
-    console.log(username);
+  schema = {
+    username: Joi.string()
+      .required()
+      .label("Username"),
+    password: Joi.string()
+      .required()
+      .label("Password")
   };
 
-  handleChange = ({ currentTarget: input }) => {
-    const account = { ...this.state.account };
-    account[input.name] = input.value;
-    this.setState({ account });
+  doSubmit = () => {
+    // Call the surver
+    console.log("Submitted");
   };
 
   render() {
-    const { account } = this.state;
-
     return (
       <div>
         <h1>Login Form</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="username" />
-            Username
-            <input
-              autoFocus
-              value={account.username}
-              onChange={this.handleChange}
-              id="username"
-              name="username"
-              type="text"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password" />
-            Password
-            <input
-              value={account.password}
-              onChange={this.handleChange}
-              name="password"
-              id="password"
-              type="text"
-              className="form-control"
-            />
-          </div>
-          <button className="btn btn-primary ">Submit</button>
+          {this.renderInput("username", "Username")}
+          {this.renderInput("password", "Password", "password")}
         </form>
+        {this.renderButton("Login")}
       </div>
     );
   }
